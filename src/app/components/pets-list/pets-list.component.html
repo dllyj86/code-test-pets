@@ -1,0 +1,14 @@
+<div>
+  Male
+  <ul>
+    <li *ngFor="let pet of petsWithMaleOwner">
+      {{ pet.name }}
+    </li>
+  </ul>
+  Female
+  <ul>
+    <li *ngFor="let pet of petsWithFemaleOwner">
+      {{ pet.name }}
+    </li>
+  </ul>
+</div>
