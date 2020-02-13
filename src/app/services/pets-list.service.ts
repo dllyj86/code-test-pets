@@ -8,6 +8,9 @@ import { Pet } from '../models/Pet';
 import { Owner } from '../models/Owner';
 import * as _ from 'lodash';
 
+/**
+ * Pets list service.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +18,9 @@ export class PetsListService {
 
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Call api.
+   */
   loadPetsList(): Observable<any> {
     return this.httpClient.get(environment.PETS_API_URL).pipe(map<any, Array<Pet>>((response) => {
       console.log(response);
@@ -22,26 +28,33 @@ export class PetsListService {
       return response;
     }),
     catchError(error => {
-      console.error('Load pets got error: ' + error);
+      console.error('Load pets got error: ' + JSON.stringify(error));
       return of([]);
     }));
   }
 
+  /**
+   * Load pets and handle the response.
+   */
   loadPets(): Observable<GroupedPetsInterface> {
 
     return this.loadPetsList().pipe(map<any, GroupedPetsInterface>(response => {
-      const petsArray = this.convertResToPetsArray(response);
-      const groupedPets = this.groupPets(petsArray);
 
-      console.log(JSON.stringify(groupedPets));
+      if(Array.isArray(response) && response.length > 0) {
+        const petsArray = this.convertResToPetsArray(response);
+        const groupedPets = this.groupPets(petsArray);
 
-      return groupedPets;
+        console.log(JSON.stringify(groupedPets));
+
+        return groupedPets;
+      } else {
+        return null;
+      }
     }));
-
   }
 
   /**
-   *
+   * Convert response owner array to pets array.
    * @param response
    */
   convertResToPetsArray(response: any): Array<Pet> {
@@ -49,23 +62,6 @@ export class PetsListService {
     const petsArray = [];
 
     if(Array.isArray(response)) {
-      /*
-      [{
-        "name": "Bob",
-        "gender": "Male",
-        "age": 23,
-        "pets": [
-          {
-            "name": "Garfield",
-            "type": "Cat"
-          },
-          {
-            "name": "Fido",
-            "type": "Dog"
-          }
-        ]
-      }]
-      */
       const originalPetsList = response as Array<any>;
       for(const orignalData of originalPetsList){
         const owner = new Owner(orignalData['name'], orignalData['gender'], orignalData['age']);
@@ -85,6 +81,11 @@ export class PetsListService {
     }
   }
 
+  /**
+   * Generate object that contains pets.
+   * Pets are grouped by owner's gender.
+   * @param petsArray
+   */
   groupPets(petsArray: Array<Pet>): GroupedPetsInterface {
     const groupedPets: GroupedPetsInterface = _.groupBy(petsArray, (pet: Pet) => {
       return pet.owner.gender;

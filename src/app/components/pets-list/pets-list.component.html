@@ -1,14 +1,19 @@
-<div>
-  Male
-  <ul>
-    <li *ngFor="let pet of petsWithMaleOwner">
-      {{ pet.name }}
-    </li>
-  </ul>
-  Female
-  <ul>
-    <li *ngFor="let pet of petsWithFemaleOwner">
-      {{ pet.name }}
-    </li>
-  </ul>
+<div class="pets-list-container">
+  <div>
+    <button class="show-pets-list-button" mat-raised-button	(click)="loadPestList()">Show pets list.</button>
+  </div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <mat-list *ngIf="isLoaded && !isFailed">
+    <h3 matSubheader>Male</h3>
+    <mat-list-item *ngFor="let pet of petsWithMaleOwner">
+      <mat-icon matListIcon></mat-icon>
+      <h4 matLine>{{pet.name}}</h4>
+    </mat-list-item>
+    <h3 matSubheader>Female</h3>
+    <mat-list-item *ngFor="let pet of petsWithFemaleOwner">
+      <mat-icon matListIcon></mat-icon>
+      <h4 matLine>{{pet.name}}</h4>
+    </mat-list-item>
+  </mat-list>
+  <app-error-message *ngIf="isFailed" [message]="errorMessage"></app-error-message>
 </div>

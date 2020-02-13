@@ -1,0 +1,12 @@
+.pets-list-container {
+  width: fit-content;
+  margin: auto;
+
+  mat-spinner {
+    margin-top: 1rem;
+  }
+
+  mat-list {
+    width: fit-content;
+  }
+}
