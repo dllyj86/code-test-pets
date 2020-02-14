@@ -1,21 +1,18 @@
 <div class="pets-list-container">
   <div>
     <!-- Click button to load data -->
-    <button class="show-pets-list-button" mat-raised-button	(click)="loadPestList()">{{showListButtonLabel}}</button>
+    <button class="show-pets-list-button" mat-raised-button	(click)="loadPestList()" *ngIf="!isLoading">{{showListButtonLabel}}</button>
   </div>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <!-- Pet list -->
   <mat-list *ngIf="isLoaded && !isFailed" class="pets-list">
-    <h3 matSubheader>{{maleLabel}}</h3>
-    <mat-list-item class="pet-li-for-male" *ngFor="let pet of petsWithMaleOwner">
-      <mat-icon matListIcon></mat-icon>
-      <h4 matLine>{{pet.name}}</h4>
-    </mat-list-item>
-    <h3 matSubheader>{{femaleLabel}}</h3>
-    <mat-list-item class="pet-li-for-female" *ngFor="let pet of petsWithFemaleOwner">
-      <mat-icon matListIcon></mat-icon>
-      <h4 matLine>{{pet.name}}</h4>
-    </mat-list-item>
+    <ng-container *ngFor="let group of groupedPetsList">
+      <h3 matSubheader>{{group.groupKey}}</h3>
+      <mat-list-item class="pet-li" *ngFor="let pet of group.groupValues">
+        <mat-icon matListIcon></mat-icon>
+        <h4 matLine>{{pet.name}}</h4>
+      </mat-list-item>
+    </ng-container>
   </mat-list>
   <!-- Error message -->
   <app-error-message class="error-message" *ngIf="isFailed" [message]="errorMessage"></app-error-message>

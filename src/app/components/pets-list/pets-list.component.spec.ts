@@ -7,7 +7,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GroupedPetsInterface } from 'src/app/models/groupedpetsinterface';
 import { of } from 'rxjs';
 
-const groupedPetsData: GroupedPetsInterface = require('./grouped-pets-mock.json');
+const groupedPetsData: Array<GroupedPetsInterface> = require('./grouped-pets-mock.json');
 
 describe('PetsListComponent', () => {
   let component: PetsListComponent;
@@ -87,8 +87,22 @@ describe('PetsListComponent', () => {
     expect(component.setPageForLoading).toHaveBeenCalled();
     expect(component.setPageForLoaded).toHaveBeenCalledWith(false);
 
-    expect(getElList('.pet-li-for-male').length).toBe(6);
-    expect(getElList('.pet-li-for-female').length).toBe(4);
+    expect(getElList('.pet-li').length).toBe(7);
+  })
+
+  it('should hide button and show spinner when loading', async () => {
+    spyOn(service, 'loadPets').and.returnValue(of(groupedPetsData));
+    spyOn(component, 'setPageForLoaded').and.callFake(() => {});
+
+    let button = getEl('.show-pets-list-button');
+    button.click();
+    fixture.detectChanges();
+
+    button = getEl('.show-pets-list-button');
+    expect(button).toBe(null);
+
+    const spinner = getEl('mat-spinner');
+    expect(spinner).not.toBe(null);
   })
 
   // Should show error message

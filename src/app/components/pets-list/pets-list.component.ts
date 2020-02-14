@@ -1,10 +1,7 @@
-import { GenderEnum } from './../../models/gender';
-import { Pet } from './../../models/Pet';
 import { PetsListService } from './../../services/pets-list.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable, Subject } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { GroupedPetsInterface } from 'src/app/models/groupedpetsinterface';
-import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pets-list',
@@ -12,17 +9,16 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./pets-list.component.scss']
 })
 export class PetsListComponent implements OnInit, OnDestroy {
-
-  maleLabel = 'Male';
-  femaleLabel = 'Female';
-
-  petsWithMaleOwner: Array<Pet>;
-  petsWithFemaleOwner: Array<Pet>;
+  // Keep all valid pets data
+  groupedPetsList: Array<GroupedPetsInterface>;
 
   loadPetsSub: Subscription;
   triggerSub: Subscription;
 
+  // Used by show pets list button
   loadPetsTrigger = new Subject<boolean>();
+  // button label
+  showListButtonLabel = 'Load pets list.';
 
   // Impact spinner
   isLoading = false;
@@ -30,7 +26,7 @@ export class PetsListComponent implements OnInit, OnDestroy {
   isLoaded = false;
   // Impact error message and pets list
   isFailed = false;
-  showListButtonLabel = 'Show pets list.';
+
   errorMessage: string;
 
   constructor(private petsListService: PetsListService) { }
@@ -38,10 +34,9 @@ export class PetsListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.triggerSub = this.loadPetsTrigger.subscribe(value => {
       this.setPageForLoading();
-      this.loadPetsSub = this.petsListService.loadPets().subscribe((groupedPets: GroupedPetsInterface) => {
+      this.loadPetsSub = this.petsListService.loadPets().subscribe((groupedPets: Array<GroupedPetsInterface>) => {
         if(groupedPets) {
-          this.petsWithMaleOwner = groupedPets[GenderEnum.MALE];
-          this.petsWithFemaleOwner = groupedPets[GenderEnum.FEMALE];
+          this.groupedPetsList = groupedPets;
           this.setPageForLoaded(false);
         } else {
           this.errorMessage = 'Load pets failed.';

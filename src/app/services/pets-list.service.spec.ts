@@ -1,3 +1,4 @@
+import { GenderEnum } from './../models/gender';
 import { environment } from './../../environments/environment.prod';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -63,27 +64,58 @@ describe('PetsListService', () => {
 
   // Test convertResToPetsArray
   it('should convert respones to pets array', () => {
-    const petsList = service.convertResToPetsArray(rawApiResponse);
-    expect(petsList.length).toBe(petsArray.length);
+    const petsList = service.convertResToGroupedPets(rawApiResponse);
+    expect(petsList.length).toBe(2);
+    expect(petsList[0].groupKey).toBe(GenderEnum.MALE);
+    expect(petsList[0].groupValues.length).toBe(4);
+    expect(petsList[1].groupKey).toBe(GenderEnum.FEMALE);
+    expect(petsList[1].groupValues.length).toBe(3);
   })
 
   it('should get empty array with invalid response', () => {
-    const petsList = service.convertResToPetsArray(null);
-    expect(petsList.length).toBe(0);
+    const petsList = service.convertResToGroupedPets(null);
+    expect(petsList).toBe(null);
   })
 
-  // Test groupPets
-  it('should get grouped pest', () => {
-    const groupedPets = service.groupPets(petsArray);
-    expect(Object.keys(groupedPets).length).toBe(2);
+  it('should filter correctly', () => {
+
+    const list = [
+      {type: 'dog', name: 'dog 1', owner: null},
+      {type: 'dog', name: 'dog 2', owner: null},
+      {type: 'dog', name: 'dog 3', owner: null},
+      {type: 'dog', name: 'dog 3', owner: null},
+      {type: 'cat', name: 'cat 1', owner: null},
+      {type: 'cat', name: 'dog 3', owner: null},
+    ]
+
+    let filteredList = service.filterPetsByValue(list, 'type', 'dog');
+    expect(filteredList.length).toBe(4);
+
+    filteredList = service.filterPetsByValue(list, 'name', 'dog 3');
+    expect(filteredList.length).toBe(3);
   })
 
-  it('should be empty object', () => {
-    let groupedPets = service.groupPets([]);
-    expect(Object.keys(groupedPets).length).toBe(0);
+  it('should sort correctly', () => {
+    const list = [
+      {type: 'dog', name: 'dog 1', owner: null},
+      {type: 'dog', name: 'dog 2', owner: null},
+      {type: 'dog', name: 'dog 3', owner: null},
+      {type: 'dog', name: 'dog 3', owner: null},
+      {type: 'cat', name: 'cat 1', owner: null},
+      {type: 'cat', name: 'dog 3', owner: null}
+    ]
 
-    groupedPets = service.groupPets(null);
-    expect(Object.keys(groupedPets).length).toBe(0);
+    service.sortPetsList(list, 'name');
+
+    expect(list[0].name).toEqual('cat 1');
+    expect(list[1].name).toEqual('dog 1');
+    expect(list[3].name).toEqual('dog 3');
+    expect(list[5].name).toEqual('dog 3');
+
+    service.sortPetsList(list, 'name', 'desc');
+    expect(list[0].name).toEqual('dog 3');
+    expect(list[2].name).toEqual('dog 3');
+    expect(list[4].name).toEqual('dog 1');
+    expect(list[5].name).toEqual('cat 1');
   })
-
 });

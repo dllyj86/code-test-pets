@@ -1,96 +1,40 @@
-{
-  "Male": [
-    {
-      "name": "Garfield",
-      "type": "Cat",
-      "owner": {
-        "name": "Bob",
-        "age": 23,
-        "gender": "Male"
+[
+  {
+    "groupKey": "Male",
+    "groupValues": [
+      {
+        "name": "Garfield",
+        "type": "Cat"
+      },
+      {
+        "name": "Jim",
+        "type": "Cat"
+      },
+      {
+        "name": "Max",
+        "type": "Cat"
+      },
+      {
+        "name": "Tom",
+        "type": "Cat"
       }
-    },
-    {
-      "name": "Fido",
-      "type": "Dog",
-      "owner": {
-        "name": "Bob",
-        "age": 23,
-        "gender": "Male"
+    ]
+  },
+  {
+    "groupKey": "Female",
+    "groupValues": [
+      {
+        "name": "Garfield",
+        "type": "Cat"
+      },
+      {
+        "name": "Simba",
+        "type": "Cat"
+      },
+      {
+        "name": "Tabby",
+        "type": "Cat"
       }
-    },
-    {
-      "name": "Tom",
-      "type": "Cat",
-      "owner": {
-        "name": "Fred",
-        "age": 40,
-        "gender": "Male"
-      }
-    },
-    {
-      "name": "Max",
-      "type": "Cat",
-      "owner": {
-        "name": "Fred",
-        "age": 40,
-        "gender": "Male"
-      }
-    },
-    {
-      "name": "Sam",
-      "type": "Dog",
-      "owner": {
-        "name": "Fred",
-        "age": 40,
-        "gender": "Male"
-      }
-    },
-    {
-      "name": "Jim",
-      "type": "Cat",
-      "owner": {
-        "name": "Fred",
-        "age": 40,
-        "gender": "Male"
-      }
-    }
-  ],
-  "Female": [
-    {
-      "name": "Garfield",
-      "type": "Cat",
-      "owner": {
-        "name": "Jennifer",
-        "age": 18,
-        "gender": "Female"
-      }
-    },
-    {
-      "name": "Tabby",
-      "type": "Cat",
-      "owner": {
-        "name": "Samantha",
-        "age": 40,
-        "gender": "Female"
-      }
-    },
-    {
-      "name": "Simba",
-      "type": "Cat",
-      "owner": {
-        "name": "Alice",
-        "age": 64,
-        "gender": "Female"
-      }
-    },
-    {
-      "name": "Nemo",
-      "type": "Fish",
-      "owner": {
-        "name": "Alice",
-        "age": 64,
-        "gender": "Female"
-      }
-    }
-  ]
-}
+    ]
+  }
+]

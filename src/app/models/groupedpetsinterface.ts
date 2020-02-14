@@ -3,6 +3,6 @@ import { Pet } from './Pet';
 
 export interface GroupedPetsInterface {
 
-  gender: GenderEnum;
-  pets: Array<Pet>;
+  groupKey: string;
+  groupValues: Array<Pet>
 }
