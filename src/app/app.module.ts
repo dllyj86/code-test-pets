@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PetsListComponent } from './components/pets-list/pets-list.component';
 import { CustomMaterialModule } from './modules/custom-material/custom-material.module';
-import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 
 @NgModule({
   declarations: [

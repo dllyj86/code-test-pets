@@ -13,14 +13,16 @@ import { catchError } from 'rxjs/operators';
 })
 export class PetsListComponent implements OnInit, OnDestroy {
 
-  petsWithMaleOwner: Array<Pet>;
+  maleLabel = 'Male';
+  femaleLabel = 'Female';
 
+  petsWithMaleOwner: Array<Pet>;
   petsWithFemaleOwner: Array<Pet>;
 
   loadPetsSub: Subscription;
+  triggerSub: Subscription;
 
   loadPetsTrigger = new Subject<boolean>();
-  triggerSub: Subscription;
 
   // Impact spinner
   isLoading = false;
@@ -28,26 +30,24 @@ export class PetsListComponent implements OnInit, OnDestroy {
   isLoaded = false;
   // Impact error message and pets list
   isFailed = false;
-
+  showListButtonLabel = 'Show pets list.';
   errorMessage: string;
 
   constructor(private petsListService: PetsListService) { }
 
   ngOnInit() {
-    this.triggerSub = this.loadPetsTrigger.subscribe(shouldLoad => {
-      if(shouldLoad) {
-        this.setPageForLoading();
-        this.petsListService.loadPets().subscribe((groupedPets: GroupedPetsInterface) => {
-          if(groupedPets) {
-            this.petsWithMaleOwner = groupedPets[GenderEnum.MALE];
-            this.petsWithFemaleOwner = groupedPets[GenderEnum.FEMALE];
-            this.setPageForLoaded(false);
-          } else {
-            this.errorMessage = 'Load pets failed.';
-            this.setPageForLoaded(true);
-          }
-        });
-      }
+    this.triggerSub = this.loadPetsTrigger.subscribe(value => {
+      this.setPageForLoading();
+      this.loadPetsSub = this.petsListService.loadPets().subscribe((groupedPets: GroupedPetsInterface) => {
+        if(groupedPets) {
+          this.petsWithMaleOwner = groupedPets[GenderEnum.MALE];
+          this.petsWithFemaleOwner = groupedPets[GenderEnum.FEMALE];
+          this.setPageForLoaded(false);
+        } else {
+          this.errorMessage = 'Load pets failed.';
+          this.setPageForLoaded(true);
+        }
+      });
     });
   }
 
@@ -65,7 +65,7 @@ export class PetsListComponent implements OnInit, OnDestroy {
    * Trigger load pest list logic.
    */
   loadPestList(){
-    this.loadPetsTrigger.next(true);
+    this.loadPetsTrigger.next();
   }
 
   /**

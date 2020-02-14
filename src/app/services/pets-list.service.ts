@@ -21,10 +21,8 @@ export class PetsListService {
   /**
    * Call api.
    */
-  loadPetsList(): Observable<any> {
+  loadPetsFromApi(): Observable<any> {
     return this.httpClient.get(environment.PETS_API_URL).pipe(map<any, Array<Pet>>((response) => {
-      console.log(response);
-
       return response;
     }),
     catchError(error => {
@@ -36,15 +34,13 @@ export class PetsListService {
   /**
    * Load pets and handle the response.
    */
-  loadPets(): Observable<GroupedPetsInterface> {
+  loadPets(): Observable<GroupedPetsInterface | null> {
 
-    return this.loadPetsList().pipe(map<any, GroupedPetsInterface>(response => {
+    return this.loadPetsFromApi().pipe(map<any, GroupedPetsInterface>(response => {
 
       if(Array.isArray(response) && response.length > 0) {
         const petsArray = this.convertResToPetsArray(response);
         const groupedPets = this.groupPets(petsArray);
-
-        console.log(JSON.stringify(groupedPets));
 
         return groupedPets;
       } else {

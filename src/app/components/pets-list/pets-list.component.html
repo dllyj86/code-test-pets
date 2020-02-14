@@ -1,19 +1,22 @@
 <div class="pets-list-container">
   <div>
-    <button class="show-pets-list-button" mat-raised-button	(click)="loadPestList()">Show pets list.</button>
+    <!-- Click button to load data -->
+    <button class="show-pets-list-button" mat-raised-button	(click)="loadPestList()">{{showListButtonLabel}}</button>
   </div>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-list *ngIf="isLoaded && !isFailed">
-    <h3 matSubheader>Male</h3>
-    <mat-list-item *ngFor="let pet of petsWithMaleOwner">
+  <!-- Pet list -->
+  <mat-list *ngIf="isLoaded && !isFailed" class="pets-list">
+    <h3 matSubheader>{{maleLabel}}</h3>
+    <mat-list-item class="pet-li-for-male" *ngFor="let pet of petsWithMaleOwner">
       <mat-icon matListIcon></mat-icon>
       <h4 matLine>{{pet.name}}</h4>
     </mat-list-item>
-    <h3 matSubheader>Female</h3>
-    <mat-list-item *ngFor="let pet of petsWithFemaleOwner">
+    <h3 matSubheader>{{femaleLabel}}</h3>
+    <mat-list-item class="pet-li-for-female" *ngFor="let pet of petsWithFemaleOwner">
       <mat-icon matListIcon></mat-icon>
       <h4 matLine>{{pet.name}}</h4>
     </mat-list-item>
   </mat-list>
-  <app-error-message *ngIf="isFailed" [message]="errorMessage"></app-error-message>
+  <!-- Error message -->
+  <app-error-message class="error-message" *ngIf="isFailed" [message]="errorMessage"></app-error-message>
 </div>

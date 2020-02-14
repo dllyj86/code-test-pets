@@ -16,10 +16,17 @@ describe('ErrorMessageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorMessageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
+
+  it('should show correct error message', () => {
+    component.message = 'Error!';
+    fixture.detectChanges();
+    const el = fixture.debugElement.nativeElement;
+    expect('Error!').toEqual(el.querySelector('.error-message-container p').textContent);
+  })
 });
