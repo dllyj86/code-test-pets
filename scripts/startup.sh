@@ -1,2 +1,3 @@
 #!/bin/bash
-npm run prod-start
+cd ..
+npm run start
