@@ -6,7 +6,7 @@
     "start": "ng serve",
     "prod-start": "node server.js",
     "build": "ng build",
-    "prod-build": "ng build --aot=false --prod",
+    "prod-build": "ng build --aot false --build-optimizer false --prod",
     "test": "ng test --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
