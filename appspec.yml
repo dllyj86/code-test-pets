@@ -4,7 +4,7 @@ files:
   - source: /
     destination: /home/ec2-user/code-test-pets/
 hooks:
-  ApplicationStart:
-    - location: scripts/startup.sh
+  AfterInstall:
+    - location: /home/ec2-user/code-test-pets/scripts/startup.sh
       timeout: 3000
       runas: root
