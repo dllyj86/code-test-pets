@@ -4,7 +4,11 @@ files:
   - source: /
     destination: /home/ec2-user/code-test-pets/
 hooks:
+  BeforeInstall:
+    - location: scripts/clean.sh
+      timeout: 30000
+      runas: root
   AfterInstall:
-    - location: /home/ec2-user/code-test-pets/scripts/startup.sh
-      timeout: 3000
+    - location: scripts/startup.sh
+      timeout: 30000
       runas: root
