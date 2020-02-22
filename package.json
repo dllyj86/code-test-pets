@@ -6,7 +6,7 @@
     "start": "ng serve",
     "prod-start": "node code_test_pets_server.js",
     "build": "ng build",
-    "prod-build": "ng build --aot --prod",
+    "prod-build": "ng build --prod --aot=false --build-optimizer=false",
     "test": "ng test --code-coverage",
     "ci-test": "ng test --code-coverage --watch false",
     "lint": "ng lint",
