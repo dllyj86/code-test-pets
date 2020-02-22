@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "prod-start": "node server.js",
+    "prod-start": "node code_test_pets_server.js",
     "build": "ng build",
-    "prod-build": "ng build --prod",
+    "prod-build": "ng build --aot --prod",
     "test": "ng test --code-coverage",
+    "ci-test": "ng test --code-coverage --watch false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
