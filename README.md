@@ -121,3 +121,9 @@ This file keeps application properties for dev environment.
 
 2. environment.prod  
 This file keeps application properties for production environment.
+
+### other files
+
+1. Scripts in scripts folder are for AWS CodeDeploy.  
+
+2. appspec.yml is for AWS CodeDeploy.
