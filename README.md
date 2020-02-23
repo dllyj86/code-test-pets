@@ -61,7 +61,10 @@ I didn't setup trigger for building code automatically when I pushed the code to
 ## Running unit tests
 
 Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io).  
-Run `npm run ci-test` to execute the unit tests via Karma with Chrome headless. This is for the testing in Jenkins.
+Run `npm run ci-test` to execute the unit tests via Karma with Chrome headless. This is for the testing in Jenkins.  
+
+**Notice:**  
+In Jenkins, even though the EC2 is t2.small (2GB memory), the UT is still failed occasionally because the connection to Chrome headless is timedout. You could try to build a again after waiting for a few seconds.
 
 ## Code structure
 
